@@ -11,7 +11,7 @@ function Dashboard({ children }: { children: React.ReactNode }) {
         <Sidebar />
       </div>
 
-      <main className="md:pl-56 h-full">{children}</main>
+      <main className="md:pl-56 pt-20 h-full">{children}</main>
     </div>
   );
 }
