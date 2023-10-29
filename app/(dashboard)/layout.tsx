@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import Navbar from "./_components/navbar";
 import Sidebar from "./_components/sidebar";
 
@@ -12,6 +13,7 @@ function Dashboard({ children }: { children: React.ReactNode }) {
       </div>
 
       <main className="md:pl-56 pt-20 h-full">{children}</main>
+      <Toaster />
     </div>
   );
 }
