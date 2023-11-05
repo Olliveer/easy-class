@@ -6,6 +6,7 @@ import { notFound, redirect } from "next/navigation";
 import TitleForm from "./_components/title-form";
 import DescriptionForm from "./_components/description-form";
 import ImageForm from "./_components/image-form";
+import CategoryForm from "./_components/category-form";
 
 async function CourseDetails({
   params,
@@ -29,6 +30,12 @@ async function CourseDetails({
   if (!course) {
     notFound();
   }
+
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
 
   const requiredFields = [
     course.title,
@@ -72,6 +79,15 @@ async function CourseDetails({
           <ImageForm
             initialData={course}
             courseId={course.id}
+          />
+
+          <CategoryForm
+            initialData={course}
+            courseId={course.id}
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
           />
         </div>
       </div>
