@@ -22,7 +22,7 @@ model Course {
 
   categoryId String?
 
-  chapter     Chapter[]
+  chapters    Chapter[]
   attachments Attachment[]
   purchases   Purchase[]
 
