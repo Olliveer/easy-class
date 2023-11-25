@@ -81,4 +81,8 @@ body,
   }
 }
 
+.ql-container {
+  font-size: 16xp !important;
+}
+
 /* @import "@uploadthing/react/styles.css"; */

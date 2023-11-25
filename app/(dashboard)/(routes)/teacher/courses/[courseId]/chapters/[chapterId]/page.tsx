@@ -5,6 +5,7 @@ import { ArrowLeft, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import ChapterTitleForm from "./_components/chapter-title-form";
+import ChapterDescriptionForm from "./_components/chapter-description-form";
 
 async function Chapter({
   params,
@@ -29,6 +30,8 @@ async function Chapter({
       muxData: true,
     },
   });
+
+  console.log(chapter);
 
   if (!chapter) {
     return redirect(`/courses/${params.courseId}`);
@@ -75,6 +78,11 @@ async function Chapter({
               initialData={chapter}
               courseId={params.courseId}
               chapterId={params.chapterId}
+            />
+            <ChapterDescriptionForm
+              chapterId={params.chapterId}
+              courseId={params.courseId}
+              initialData={chapter}
             />
           </div>
         </div>
