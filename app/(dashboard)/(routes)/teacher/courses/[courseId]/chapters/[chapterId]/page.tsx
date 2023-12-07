@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import ChapterTitleForm from "./_components/chapter-title-form";
 import ChapterDescriptionForm from "./_components/chapter-description-form";
 import ChapterAccessForm from "./_components/chapter-access-form";
+import ChapterVideoForm from "./_components/chapter-video-form";
 
 async function Chapter({
   params,
@@ -31,8 +32,6 @@ async function Chapter({
       muxData: true,
     },
   });
-
-  console.log(chapter);
 
   if (!chapter) {
     return redirect(`/courses/${params.courseId}`);
@@ -104,6 +103,11 @@ async function Chapter({
             <IconBadge icon={Video} />
             <h2 className="text-xl">Add a video</h2>
           </div>
+          <ChapterVideoForm
+            chapterId={params.chapterId}
+            courseId={params.courseId}
+            initialData={chapter}
+          />
         </div>
       </div>
     </div>
