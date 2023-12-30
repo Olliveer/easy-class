@@ -3,6 +3,7 @@ import Link from "next/link";
 import IconBadge from "./icon-badge";
 import { BookOpen } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import CourseProgress from "./course-progress";
 
 type CourseCardProps = {
   title: string;
@@ -51,8 +52,11 @@ function CourseCard({
             </div>
           </div>
           {progress !== null ? (
-            // todo: fix this
-            <div className=""></div>
+            <CourseProgress
+              size="sm"
+              value={progress}
+              variant={progress === 100 ? "success" : "default"}
+            />
           ) : (
             <p className="text-md md:text-sm font-medium text-slate-700">
               {formatCurrency(price)}

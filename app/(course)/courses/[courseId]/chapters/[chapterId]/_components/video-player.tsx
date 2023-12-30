@@ -1,8 +1,12 @@
 "use client";
 
+import { useToast } from "@/components/ui/use-toast";
+import { useConfettiStore } from "@/hooks/use-confetti-store";
 import { cn } from "@/lib/utils";
 import MuxPlayer from "@mux/mux-player-react";
+import axios from "axios";
 import { Loader2, Lock } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type VideoPlayerProps = {
@@ -24,7 +28,44 @@ function VideoPlayer({
   isLocked,
   completedOnEnd,
 }: VideoPlayerProps) {
+  const router = useRouter();
+  const { toast } = useToast();
+  const confetti = useConfettiStore();
   const [isReady, setIsReady] = useState(false);
+
+  async function onEndVideo() {
+    try {
+      if (completedOnEnd) {
+        await axios.put(
+          `/api/courses/${courseId}/chapters/${chapterId}/progress`,
+          {
+            isCompleted: true,
+          }
+        );
+
+        if (!nextChapterId) {
+          confetti.toggleConfetti();
+        }
+
+        toast({
+          title: "Success",
+          description: "Chapter marked as completed",
+        });
+
+        router.refresh();
+
+        if (nextChapterId) {
+          router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong, please try again later",
+        variant: "destructive",
+      });
+    }
+  }
 
   return (
     <div className="relative aspect-video">
@@ -43,15 +84,13 @@ function VideoPlayer({
           title={title}
           className={cn("", !isReady && "hidden")}
           onCanPlay={() => setIsReady(true)}
-          onEnded={() => {}}
+          onEnded={onEndVideo}
           autoPlay
           playbackId={playbackId}
         />
       ) : null}
     </div>
   );
-
-  // 18:07
 }
 
 export default VideoPlayer;
